@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vu3ex/ex3</title>
+    <script src="https://unpkg.com/vue@3"></script>
+</head>
+<body>
+    <h3>빌트인 디렉티브</h3>
+    HTML 태그 내 들어가는 속성 역할을 하며, `v-`라는 접두어가 붙는다.<br>
+    디렉티브는 DOM Element가 뭔가를 수행하도록 지시하는 특수한 토큰이다.
+    <div id="app">
+        ❌<a href="{{link}}">데이터 연금술사(잘못된 경로)</a><br>
+        <!-- directive 사용 : 동적으로 href 속성을 vue 인스턴스의 link 데이터 속성과 바인딩 -->
+        ⭕<a v-bind:href="link">데이터 과학자(올바른 경로)</a><br>
+        ⭕<a :href="link">데이터 과학자(올바른 경로)</a> <!-- v-bind를 생략하고 :href로 작성해도 동일하다.-->
+        <img v-bind:src="imageSrc" alt="동적 이미지" />
+        
+        <h3 v-text="say"></h3>
+        <h3>data 속성값 1: {{say}}</h3>
+
+        <h3 v-once="say">data 속성값 2 : {{say}}</h3> <!-- 데이터가 동적으로 변경되더라도 얘는 한번만 실행되고 변경되지 않음.-->
+        <h3>함수 호출 결과 : {{sayFunc()}}</h3> <!-- 함수 호출 -->
+        
+        <span v-text="aLinkNaver">문자열 그대로 출력(innerText)</span><br> <!-- 문자열로 취급 -->
+        <span v-html="aLinkNaver">문자열 그대로 출력(innerHTML)</span><br>
+        
+        <hr>
+        <h3>양방향 데이터 바인딩</h3>
+        <!-- 양방향 데이터 바인딩 : v-model은 v-bind + v-on -->
+        이름은 <input type="text" v-model="name"> {{name}}<br>
+        이름은 <input type="text" v-bind:value="name" v-on:input="changeName"> {{name}}<br>
+        <hr>
+        <!-- 계산된 property 관련 -->
+        <h3>Computed Properties</h3>
+        a = {{a}}, b = {{b}}<br>
+        a값 입력(string) : <input type="text" v-model="a" />
+        <br> 입력된 a : {{a}} (타입 : {{typeof(a)}})</br>
+        a값 입력(number) : <input type="text" v-model.number="a" />
+        <hr>
+        <h3>제어문(조건판단문) </h3>
+        <h2 v-if="age > 20">age가 20 초과</h2>
+        <h2 v-else-if="age === 20">age가 20이네요</h2>
+        <h2 v-else="age">age가 20 미만</h2>
+        <hr>
+        <h3>제어문(반복문)</h3>
+        <b>오늘 할 일</b>
+        <ol>
+            <li v-for="(todo, index) in todos" :key="index">{{todo.msg}}</li>
+        </ol>
+        <ul>
+            <li v-for="(todo, index) in todos" :key="index">{{index + 1}}) {{todo.msg}}</li> <!-- index 0으로 시작-->
+        </ul>
+    </div>
+    <script>
+        const {createApp} = Vue;
+        createApp({
+            data(){ 
+                return{
+                    link:'https://cafe.daum.net/flowlife',  // link 데이터 속성 정의
+                    imageSrc:'google.gif',
+                    say:'v-text 사용',
+                    aLinkNaver:"<a href='https://naver.com'>네이버</a>",
+
+                    // 양방향 데이터 바인딩
+                    name:'크크',
+                    
+                    // 계산된 프로퍼티
+                    a:'1',   // 문자열 데이터
+                    age:19,  // 숫자 데이터
+
+                    todos : [  // 배열 데이터
+                        {msg:'쉬는시간'},
+                        {msg:'점심시간'},
+                        {msg:'귀가시간'},
+                    ],
+                }
+            },
+            methods: {
+                sayFunc() {
+                    this.say = '더위 절정';  // 데이터 변경(v-text 사용 -> 더위 절정)
+                    return this.say;
+                },
+                changeName(e) {
+                    this.name = e.target.value;  // 텍스트 박스를 의미
+                },
+            },
+            computed: {  // computed properties : 함수처럼 작동함. 차이점은 계산된 property가 의존하는 요소가 변경되면 반환
+                b(){
+                    return this.a + 1;
+                }
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>

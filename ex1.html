@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>vue3ex/ex1.html</title>
+        <!-- jQuery 라이브러리 로딩 : CDN -->
+        <script src="https://code.jquery.com/jquery-latest.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $('#msg').text('jQuery로 메세지 출력');
+            });
+        </script>
+
+        <!-- Vue3 라이브러리 로딩 : CDN -->
+        <script src="https://unpkg.com/vue@3"></script>
+    </head>
+    <body>
+        jQuery 출력 결과 : <span id="msg"></span>
+        <br>
+        <h3>Vue 출력 1</h3>
+        <!-- 데이터 바인딩의 기본 형태는 Mustache(텍스트 보간) 구문을 사용 -->
+        <span id="app1">{{msg}}</span> <!-- MVVM 패턴에서 View -->
+        
+        <script>
+            let hi = {msg : "hi"};  // 데이터 객체 정의. MVVM 패턴에서 Model
+            
+            // Vue.createApp()에 의해 생성된 객체를 애플리케이션 인스턴스라고 한다.
+            Vue.createApp({  // MVVM 패턴에서 ViewModel에 해당
+                data() {
+                    return hi;
+                },
+            }).mount('#app1')  //id가 "app1"인 요소에 마운트(DOM 요소에 연결) -> 렌더링한다는 의미
+        </script>
+       
+       <!-- Template에 해당하며, Spring 프로젝트에서 static, pubilc 디렉토리에 포함시켜야 함.-->
+        <hr>
+
+        <h3>Vue 출력 2</h3>
+        <div id="app2">
+            {{message1}}&nbsp;{{message2}}&nbsp;{{message3}}
+            <br>
+            <button @click="updateMessage">메세지 변경</button>
+        </div>
+        <script>
+            // Vue3에서는 Vue2와 달리 생성자가 아니라 createApp 함수를 이용해 애플리케이션을 인스턴스함.
+            const {createApp} = Vue;
+            createApp({
+                data(){  // data() : Vue에서 사용할 정보들을 저장하는 곳이다.
+                    return {
+                        message1: '안녕?',
+                        message2: '반가워! ' + 'Vue',
+                        message3: Math.random() * 9
+                    };
+                },
+
+                // 라이프사이클 관련 메소드 중 일부.
+                // 메소드 내에서 실행되는 custom logic을 cycle Hook이라고 한다.
+                beforeCreate() {  // 초기화를 담당
+                    console.log('beforeCreate : 인스턴스가 생성되고 나서 가장 처음으로 1회 수행');
+                },
+                created() {  // 화면에 반응성 주입
+                    console.log('created : 아직 화면 요소에 인스턴스가 부착되기 전');
+                },
+                mounted() {  // 속성 값 대입
+                    console.log('mounted : 지정한 화면 요소에 인스턴스가 부착되고 난 후에 호출되는 단계 ');
+                },
+                beforeUpdate() {  // 인스턴스의 데이터 변경
+                    console.log('beforeUpdate : 지정한 화면 요소에 인스턴스가 부착되고 난 후에 인스턴스 속성들이 화면에 치환되는 단계')
+                },
+                updated() {
+                    console.log('updated : beforeUpdate가 끝나고 화면에 다시 그리고 나면 실행되는 단계');
+                },
+                methods: {  // Vue에 관련된 메소드로 data(), 라이프사이클 메소드, methods 등이 있다.
+                    updateMessage() {
+                        this.message1 = 'hello?';
+                        this.message2 = "Good!";
+                        this.message3 = Math.random() * 90;
+                    }
+                },
+            }).mount('#app2')
+        </script>
+    </body>
+</html> 

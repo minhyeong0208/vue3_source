@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vu3ex/ex4</title>
+    <script src="https://unpkg.com/vue@3"></script>
+</head>
+<body>
+    <h3>😁v-for 연습(반응형 데이터 생성 및 사용)😁</h3>
+    <div id="app">
+        <div>
+            <h4>📚도서 정보</h4>
+            <div v-for="(book, index) in bookList" :key="index">
+                <input type="checkbox" :id="'book' + index" :value="book" v-model="selectedBooks">
+                <label :for="'book' + index">{{book.name}} {{book.price}}</label> <!-- label로 연결되어 있으므로 label을 클릭해도 checkbox 선택이 가능하다.-->
+            </div>
+        </div>
+
+        <div>
+            <h4>📕선택된 도서</h4>
+            <ul>
+                <li v-for="(book, index) in selectedBooks" :key="index">{{index + 1}} : {{book.name}}</li>
+            </ul>
+        </div>
+        
+        <script>
+            const { createApp, ref } = Vue;
+            
+            createApp({
+                setup() {  // 컴포넌트의 초기 상태와 로직을 설정한다. ref와 reactive를 사용해 반응형 상태를 정의.
+                    const bookList = ref([  
+                        // 반응형 데이터로 동작
+                        // 컴포넌트에서 반응형 데이터가 변경될 때, 자동으로 추적되어 UI를 리렌더링한다.
+                        {name:"Java Programming 기본", price:25000},
+                        {name:"MariaDB 박살내기", price:27000},
+                        {name:"JavaScript 입문", price:20000},
+                        {name:"Spring 시작하기", price:30000},
+                        {name:"start Vue.js!", price:18000},
+                    ]);
+
+                    const selectedBooks = ref([]);  // 사용자가 선택한 책 저장용 배열(반응형)
+
+                    return {bookList, selectedBooks}
+                }
+            }).mount('#app');
+        </script>
+    </div>
+</body>
+</html>
