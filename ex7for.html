@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@3"></script>
+</head>
+<body>
+    <h2>반복 렌더링을 위한 v-for 연습 : JS 파일을 별도 작성</h2>
+    <div id="app">
+        <h3>🍺음료🍺</h3>
+        <ul>
+            <li v-for="item in list" :key="item">{{item}}</li>
+        </ul>
+        <h3>가고 싶은 여행지 목록</h3>
+        <ol>
+            <li v-for="(city, index) in objArr" :key="index">{{city.site}}은(는) {{city.taketime}}</li>
+        </ol>
+        <h3>구구단 3단 출력</h3>
+        <ul>
+            <li v-for="n in 9" :key="n">3 * {{n}} = {{3 * n}}</li>
+        </ul>
+
+        <h3>배열 자료 추가 및 삭제</h3>
+        <ul>
+            <li v-for="(item, index) in myArr" :key="index">{{item}}</li>
+        </ul>
+        <button @click="addList">자료 추가(맨뒤)</button>&nbsp;
+        <button @click="addListIndex">자료 추가(특정)</button>&nbsp;
+        <button @click="changeList">자료 변경</button>&nbsp;
+        <button @click="deleteList(1)">자료 삭제</button>
+
+        <h3>for + if문 조합 : 홀수 출력</h3>
+        <span v-for="i in numArr" v-if="i % 2 == 1" :key="i">{{i}}&nbsp;&nbsp;</span>
+    </div>
+    <script src="./js/ex7.js"></script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@3"></script>
+    <!-- CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div id="app">
+        <label>입력</label> <input type="text" @change="input"/>
+        <button @click="click">click</button>
+
+        <p>{{text}}</p>  
+    </div>
+    <script>
+        const app = Vue.createApp({
+        data(){
+            return {
+                text : '', //출력될 값
+                inputText : '' //input값
+            }
+        },
+        methods:{
+            input(e){
+                return this.inputText = e.target.value
+                //input에 입력된 값을 inputText로 넣어주기
+            },
+            click(){ 
+                 return this.text = this.inputText
+                 //출력될 값인 text에 위에서 input 값을 넣어준 inputText를 넣어주기
+            }
+        }
+    }).mount("#app")
+    </script>
+</body>
+</html>

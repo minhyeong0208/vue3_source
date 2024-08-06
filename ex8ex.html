@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@3"></script>
+</head>
+<body>
+    <div id="app">
+        <h3>성적 관리</h3>
+        이 름 : <input type="text" @change="inputName"><br>
+        자 바 : <input type="text" @change="inputJava"><br>
+        리액트 : <input type="text" @change="inputReact"><br>
+        뷰: <input type="text" @change="inputVue"><br><br>
+        <button @click="click">확인</button>
+        <br>
+        <h3>입력 결과</h3>
+        <ul>
+            <li v-for="(person, index) in obj" :key="index">
+                {{person.resname}}: {{person.resjava}} {{person.resreact}} {{person.resvue}}  총점 : {{Number(person.resjava) + Number(person.resreact)+ Number(person.resvue)}}
+            </li>
+            
+        </ul>
+        <h3>전체 통계</h3>
+        <span>인원수 : {{count}}</span>
+        <span>전체 총점 : {{total}}</span>
+        
+    </div>
+    <script>
+        const {createApp} = Vue;
+        createApp({
+            data() {
+                return{
+                    name:'', java:'', react:'', vue:'',
+                    obj: [],
+                    count:0,
+                    total:0
+                }
+            },
+            methods: {
+                inputName(e){
+                    return this.name = e.target.value;
+                },
+                inputJava(e){
+                    return this.java = e.target.value;
+                },
+                inputReact(e){
+                    return this.react = e.target.value;
+                },
+                inputVue(e){
+                    return this.vue = e.target.value;
+                },
+                click(){
+                    // this.obj.resname=this.name;
+                    // this.obj.resjava=this.java;
+                    // this.obj.resreact=this.react;
+                    // this.obj.resvue=this.vue;
+
+                    this.obj.push({resname:this.name, resjava:this.java, resreact:this.react, resvue:this.vue});
+                    this.count++;
+                    this.total += Number(this.java) +Number(this.react) +Number(this.vue);
+                }
+            }
+
+        }).mount('#app');
+    </script>
+</body>
+</html>
