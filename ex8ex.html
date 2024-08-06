@@ -52,11 +52,6 @@
                     return this.vue = e.target.value;
                 },
                 click(){
-                    // this.obj.resname=this.name;
-                    // this.obj.resjava=this.java;
-                    // this.obj.resreact=this.react;
-                    // this.obj.resvue=this.vue;
-
                     this.obj.push({resname:this.name, resjava:this.java, resreact:this.react, resvue:this.vue});
                     this.count++;
                     this.total += Number(this.java) +Number(this.react) +Number(this.vue);
