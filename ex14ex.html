@@ -17,11 +17,11 @@
                 <th>사번</th><th>이름</th><th>부서명</th><th>직급</th><th>연봉</th>
             </tr>
             <tr v-for="(jikwon, index) in jikdata" :key="index">
-                <td>{{jikwon.jikwon_no}}</td>
-                <td>{{jikwon.jikwon_name}}</td>
-                <td>{{jikwon.buser_name}}</td>
-                <td>{{jikwon.jikwon_jik}}</td>
-                <td>{{jikwon.jikwon_pay}}</td>
+                <td>{{jikwon.jno}}</td>
+                <td>{{jikwon.jname}}</td>
+                <td>{{jikwon.bname}}</td>
+                <td>{{jikwon.jik}}</td>
+                <td>{{jikwon.pay}}</td>
             </tr>
             <tr>
                 <td colspan="2">인원수 : {{jikdata.length}}</td>
@@ -65,7 +65,7 @@
                 calculateAverage() {
                     if (this.jikdata.length > 0) {
                         // jikwon_pay를 숫자로 변환하여 합산
-                        let total = this.jikdata.reduce((sum, jikwon) => sum + parseInt(jikwon.jikwon_pay), 0);
+                        let total = this.jikdata.reduce((sum, jikwon) => sum + parseInt(jikwon.pay), 0);
                         this.average = (total / this.jikdata.length).toFixed(2);
                     } else {
                         this.average = 0;
