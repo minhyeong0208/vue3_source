@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@3"></script>
+</head>
+<body>
+    <div id="app">
+        <button @click="fetchWeather">날씨 정보</button>
+        <div v-if="weather">
+            <h3>삼일타워 현재 날씨 정보</h3>
+            <p>시간 : {{weather.time}}</p>
+            <p>기온 : {{weather.temperature}}℃</p>
+            <p>풍속 : {{weather.windspeed}}km/h</p>
+            <p>풍향 : {{weather.winddirection}}°</p>
+        </div>
+    </div>
+    <script>
+        const {createApp} = Vue;
+        
+        createApp({
+            data() {
+                return{
+                    weather:null,
+                }
+            },
+            methods: {
+                fetchWeather() {
+                    fetch('https://api.open-meteo.com/v1/forecast?latitude=37.49&longitude=127.03&current_weather=true')
+                    .then(response => response.json())
+                    .then(data => {
+                        this.weather = data.current_weather;
+                    })
+                    .catch(error => {
+                        console.log('날씨 자료 읽기 실패', error);
+                    })
+                },
+            },
+        }).mount('#app');
+    </script>
+</body>
+</html>
