@@ -8,10 +8,10 @@
 </head>
 <body>
     <div id="app">
-        <button @click="fetchWeather">날씨 정보</button>
+        <button @click="fetchWeather">강남 지역 날씨정보 얻기</button>
         <div v-if="weather">
-            <h3>삼일타워 현재 날씨 정보</h3>
-            <p>시간 : {{weather.time}}</p>
+            <h3>날씨 정보</h3>
+            <p>예보 시간 : {{weather.time}}</p>
             <p>기온 : {{weather.temperature}}℃</p>
             <p>풍속 : {{weather.windspeed}}km/h</p>
             <p>풍향 : {{weather.winddirection}}°</p>
@@ -34,7 +34,7 @@
                         this.weather = data.current_weather;
                     })
                     .catch(error => {
-                        console.log('날씨 자료 읽기 실패', error);
+                        console.log('Error fetching weather data', error);
                     })
                 },
             },
